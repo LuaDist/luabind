@@ -1,0 +1,15 @@
+--- This file is part of LuaDist project
+
+name = "luabind"
+version = "0.9-rc1"
+
+desc = "Luabind is a library that helps you create bindings between C++ and Lua."
+author = "Daniel Wallin, Arvid Norberg"
+license = "MIT"
+url = "http://www.rasterbar.com/products/luabind.html"
+maintainer = "Peter Kapec"
+
+depends = {
+	"lua ~> 5.1",
+	"libboost >= 1.39"
+}
