@@ -1,36 +1,33 @@
-# Copyright (C) 2007-2009 LuaDist.
+# Copyright (C) 2007-2012 LuaDist.
 # Modified by Peter Kapec
 # Redistribution and use of this file is allowed according to the terms of the MIT license.
 # For details see the COPYRIGHT file distributed with LuaDist.
 # Please note that the package source code is licensed under its own license.
 # Original build script by Leandro Motta Barros.
 
-	PROJECT(luabind)
-	CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-	INCLUDE(dist.cmake)
-
-# Find Lua
-	FIND_PACKAGE(Lua51 REQUIRED)
+project ( luabind NONE )
+cmake_minimum_required ( VERSION 2.8 )
+include ( cmake/dist.cmake )
+include ( lua )
 
 # Find Boost
-	SET(Boost_USE_STATIC_LIBS OFF)
+set ( Boost_USE_STATIC_LIBS OFF )
 #~ 	FIND_PACKAGE(Boost 1.38 COMPONENTS unit_test_framework REQUIRED)
-	FIND_PACKAGE(Boost 1.38  REQUIRED)
+find_package ( Boost 1.38 REQUIRED )
 
 # Include directories
-	INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS} ${LUA_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
+include_directories ( ${Boost_INCLUDE_DIRS} ${LUA_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR} )
 
 # Link directories
 #~ 	LINK_DIRECTORIES(${BOOST_LIBRARY_DIRS})
 
-
 # Build the library
-	FILE(GLOB LUABIND_SRC "src/*.cpp")
+file ( GLOB LUABIND_SRC "src/*.cpp" )
 
-	ADD_DEFINITIONS(-DLUABIND_BUILDING)
+add_definitions ( -DLUABIND_BUILDING )
 
-	ADD_LIBRARY(luabind SHARED ${LUABIND_SRC})
-	TARGET_LINK_LIBRARIES(luabind ${LUA_LIBRARIES})
+add_library ( luabind ${LUABIND_SRC} )
+target_link_libraries ( luabind ${LUA_LIBRARIES} )
 
 #~ 2TODO: Tests
 
@@ -44,7 +41,7 @@
 #~ 		ADD_TEST(${name} ${name})
 #~ 	ENDFUNCTION(AddUnitTest)
 
-#~ 	ADD_LIBRARY(ATestModule SHARED Tests/ATestModule.cpp)
+#~ 	ADD_LIBRARY(ATestModule Tests/ATestModule.cpp)
 #~ 	TARGET_LINK_LIBRARIES(ATestModule diluculum ${LUA_LIBRARIES})
 #~ 	SET_TARGET_PROPERTIES(ATestModule PROPERTIES PREFIX "")
 
@@ -65,10 +62,8 @@
 #~ 	AppExample(regexp "examples/regexp/regex_wrap.cpp" "" )
 
 # Install
-	INSTALL(TARGETS luabind RUNTIME DESTINATION ${INSTALL_BIN} LIBRARY DESTINATION ${INSTALL_LIB} ARCHIVE DESTINATION ${INSTALL_LIB})	
-	INSTALL(DIRECTORY luabind DESTINATION ${INSTALL_INC})
-	INSTALL(FILES LICENSE INSTALL DESTINATION ${INSTALL_DATA})
-	INSTALL(DIRECTORY doc/ DESTINATION ${INSTALL_DOC})
-	
-
+install_library ( luabind )
+install_header ( luabind )
+install_data ( LICENSE INSTALL )
+install_doc ( doc/ )
 
